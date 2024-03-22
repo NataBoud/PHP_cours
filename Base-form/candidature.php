@@ -44,6 +44,22 @@
             echo "</ul>";
         }
     }
+    // array_search($valeur, $tableau, $strict = false)
+
+    // $valeur : La valeur que vous recherchez dans le tableau.
+    // $tableau : Le tableau dans lequel vous souhaitez effectuer la recherche.
+    // $strict (facultatif) : Si ce paramètre est défini sur true, la fonction vérifiera également le type des éléments.
+
+    // array_column(array $input, mixed $column_key, mixed $index_key = null) : array
+
+    //$input : Le tableau à partir duquel extraire les valeurs de la colonne.
+    //$column_key : La clé (ou l'index numérique) de la colonne à extraire.
+    // Cette clé peut être spécifiée sous forme de chaîne (si le tableau est un tableau associatif)
+    // ou sous forme d'index numérique (si le tableau est un tableau indexé numériquement).
+    //$index_key (optionnel) : La clé (ou l'index numérique) à utiliser comme clé du tableau résultant.
+    // Cette valeur peut être utilisée pour réindexer le tableau résultant en utilisant les valeurs de la colonne spécifiée.
+    // Par défaut, les clés numériques sont utilisées
+
     ?>
 
     <form method="post" action="index.php">
