@@ -10,6 +10,9 @@
 <div>
     <h1>Votre panier</h1>
     <?php
+    // Démarrer une session PHP pour stocker les articles ajoutés
+    session_start();
+
     // Initialisation des variables
     $articles = [
         [
@@ -30,7 +33,6 @@
     ];
 
     $total = 0;
-    $panier = [];
     $erreurs = [];
 
     // Traitement du formulaire si soumis
@@ -38,10 +40,13 @@
         if (isset($_POST["article"]) && isset($_POST["quantite"])) {
             $article = $_POST["article"];
             $quantite = $_POST["quantite"];
-            $prix = $_POST["prix"];
 
             if (empty($article) || empty($quantite)) {
                 $erreurs[] = "Vous n'avez rien choisi.";
+            }
+
+            if (isset($_POST["vider_panier"])) {
+                session_destroy();
             }
 
             $article_found = false;
@@ -54,10 +59,16 @@
                             "La quantité demandée pour $article est insuffisante.";
                         break;
                     } else {
-                        $prix_total_article = $quantite * $art["Prix"];
-                        $panier[$article] = ["quantite" => $quantite, "prix_unitaire" => $art["Prix"], "prix_total_article" => $prix_total_article];
-                        $total += $prix_total_article;
-                        echo "<div>Vous avez bien ajouté $article au panier avec une quantité de $quantite.</div>";
+                        // Ajouter l'article à la session
+                        if (!isset($_SESSION['panier'][$article])) {
+                            $_SESSION['panier'][$article] = [
+                                "quantite" => 0,
+                                "prix_unitaire" => $art["Prix"],
+                                "prix_total_article" => 0
+                            ];
+                        }
+                        $_SESSION['panier'][$article]["quantite"] += $quantite;
+                        $_SESSION['panier'][$article]["prix_total_article"] += $quantite * $art["Prix"];
                     }
                 }
             }
@@ -74,6 +85,13 @@
             }
         }
     }
+
+    // Calculer le total à partir de la session
+    if (isset($_SESSION['panier'])) {
+        foreach ($_SESSION['panier'] as $article => $details) {
+            $total += $details['prix_total_article'];
+        }
+    }
     ?>
     <form action="" method="post">
         <label for="article">Choisissez un article</label>
@@ -86,18 +104,20 @@
         <label for="quantite">Quantité</label>
         <input name="quantite" type="number"/>
         <button type="submit">Ajouter au panier</button>
+        <button type="submit" name="vider_panier">Vider le panier</button>
     </form>
     <h2>Votre panier</h2>
-    <?php if (empty($panier)) { ?>
+    <?php if (empty($_SESSION['panier'])) { ?>
         <p>Votre panier est vide.</p>
     <?php } else { ?>
         <ul>
-            <?php foreach ($panier as $article => $details) { ?>
+            <?php foreach ($_SESSION['panier'] as $article => $details) { ?>
                 <li><?php echo "{$details['quantite']} x $article (Prix: {$details['prix_unitaire']} €) : {$details['prix_total_article']} €"; ?></li>
             <?php } ?>
         </ul>
         <p><strong>Total : <?php echo $total; ?> €</strong></p>
     <?php } ?>
+
 </div>
 </body>
 </html>
