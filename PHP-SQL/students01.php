@@ -12,7 +12,11 @@ try {
 function ajouterEtudiant($db, $nom, $prenom, $date_naissance, $email): void
 {
     try {
-        $requete = "INSERT INTO student (nom, prenom, date_de_naissance, adresse_email) VALUES (:nom, :prenom, :date_naissance, :email)";
+        $requete = "INSERT INTO 
+                        student 
+                        (nom, prenom, date_de_naissance, adresse_email) 
+                    VALUES 
+                        (:nom, :prenom, :date_naissance, :email)";
 
         $query = $db->prepare($requete);
 
