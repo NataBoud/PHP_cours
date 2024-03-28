@@ -53,7 +53,7 @@ function createClient(PDO $db): bool
 }
 
 // Permet d'afficher les étudiants
-function showClient(PDO $db): void
+function showClients(PDO $db): void
 {
     // Requête pour récupérer tous les étudiants triés par nom puis prénom
     $request = "SELECT * FROM client 
@@ -68,26 +68,15 @@ function showClient(PDO $db): void
         echo json_encode($client) . PHP_EOL;
     }
 }
-function getOneClientById(PDO $db, int $id): array|false
-{
-
-    $request = "SELECT 
-                    id, firstname, lastname, adresse, zipCode, city, telephone 
-                FROM 
-                    client 
-                WHERE 
-                    id=:id;";
-
+function getOneClientById(PDO $db, int $id): array|false {
+    $request = "SELECT * FROM client WHERE id=:id;";
     $statement = $db->prepare($request);
-
     $statement->execute(["id" => $id]);
-
     return $statement->fetch(PDO::FETCH_ASSOC);
 }
 
-function addCommande(PDO $db): void
-{
-    $clientId = (int)readline("Saisir id de client");
+function addCommande(PDO $db): void {
+    $clientId = (int)readline("Saisir l'id de client");
     $client = getOneClientById($db, $clientId);
     if (!$client) {
         echo "Aucun étudiant trouvé avec l'id $clientId";
@@ -106,7 +95,7 @@ function addCommande(PDO $db): void
                             VALUES 
                                 (:date, :total, :clientId)";
         $db->beginTransaction();
-
+        // Pas besoin de transaction ici
         $statement = $db->prepare($requestAddCommande);
 
         $statement->bindValue(":date", $date);
@@ -156,7 +145,7 @@ function start(): void
         $input = readline("Saisir une option: ");
         match ($input) {
             "1" => createClient($db),
-            "2" => showClient($db),
+            "2" => showClients($db),
             "3" => addCommande($db),
             "4" => showClientAndOrders($db),
             "6" => exit(),

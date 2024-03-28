@@ -4,7 +4,7 @@ $db = null;
 try {
     $db = new PDO('mysql:host=localhost;dbname=tp01', "root", "");
     echo "La connexion est établie !<br>";
-} catch(PDOException $ex) {
+} catch (PDOException $ex) {
     echo $ex->getMessage();
 }
 
@@ -51,4 +51,5 @@ function afficherEtudiants($db): void
         print_r($etud);
     }
 }
+
 afficherEtudiants($db);
