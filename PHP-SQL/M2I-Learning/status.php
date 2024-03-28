@@ -20,8 +20,8 @@ function getStatusByID(PDO $db, int $id): array|false
     $statement->execute(["id" => $id]);
     return $statement->fetch(PDO::FETCH_ASSOC);
 }
-// Récupérer les status depuis BDD
-$db = new PDO("mysql:host=localhost; dbname=exercice03m2ilearning", "root", "");
+// On précise le type d'encodage dans la connexion pour récupérer les enregistrements dans le bon format
+$db = new PDO("mysql:host=localhost; dbname=exercice03m2ilearning; charset=utf8mb4;", "root", "");
 
 // On regarde si le paramètre id est présent dans l'URL: ex status.php?id=3
 if (isset($_GET["id"])) {
@@ -34,9 +34,11 @@ if (isset($_GET["id"])) {
         return;
     }
     // On renvoie le status récupéré depuis BDD
-    echo json_encode($status);
+    echo json_encode($status, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 } else {
     // Récupère tous les status depuis la database
     $allStatus = getAllStatus($db);
-    echo json_encode($allStatus);
+    // Pour afficher les accents, on rajoute la constante JSON_UNESCAPED_UNICODE,
+    // JSON_PRETTY_PRINT permet de faire un bel affichage
+    echo json_encode($allStatus, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 }
