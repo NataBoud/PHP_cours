@@ -1,0 +1,95 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "M2I-Learning",
+    "dateExported": "2024-03-28T13:55:01.246Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "d70197e0-35ba-411e-ac71-b4ae978e2a5a",
+            "colId": "9839cc92-95ad-4a51-af37-fdca24be38d5",
+            "containerId": "",
+            "name": "check if method checking is working",
+            "url": "http://[::1]:8000/create-tag.php",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-03-28T10:55:56.586Z",
+            "modified": "2024-03-28T10:56:21.775Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "0e115854-cfd5-4e90-a329-1d69d03637c9",
+            "colId": "9839cc92-95ad-4a51-af37-fdca24be38d5",
+            "containerId": "",
+            "name": "check error on tag",
+            "url": "http://[::1]:8000/create-tag.php",
+            "method": "POST",
+            "sortNum": 15000,
+            "created": "2024-03-28T11:12:37.597Z",
+            "modified": "2024-03-28T11:13:08.511Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"jambon\": \"beurre\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "3d1952bd-5777-4830-95f9-21377ad0395a",
+            "colId": "9839cc92-95ad-4a51-af37-fdca24be38d5",
+            "containerId": "",
+            "name": "create a tag",
+            "url": "http://[::1]:8000/create-tag.php",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-03-28T10:56:06.344Z",
+            "modified": "2024-03-28T11:09:36.677Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"design\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "e7162aa4-b406-4f7d-821d-7150c146d784",
+            "colId": "9839cc92-95ad-4a51-af37-fdca24be38d5",
+            "containerId": "",
+            "name": "get all tags",
+            "url": "http://[::1]:8000/tags.php",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-03-28T13:35:50.095Z",
+            "modified": "2024-03-28T13:36:16.795Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "eec6617e-bee7-49d8-aa3b-88738d7b39ec",
+            "colId": "9839cc92-95ad-4a51-af37-fdca24be38d5",
+            "containerId": "",
+            "name": "Get one tag by id",
+            "url": "http://[::1]:8000/tags.php?id=5",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-03-28T13:52:46.263Z",
+            "modified": "2024-03-28T13:53:10.494Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "5",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        }
+    ]
+}
