@@ -113,6 +113,25 @@ $message = match (true) {
 };
 echo "$message\n";
 
+// Niveau 3
+do {
+    $userMark = (int)readline("Veuillez taper un nombre entre 0 et 20: ");
+    if ($userMark < 0 || $userMark > 20) {
+        print("Erreur. La note ne correspond pas\n");
+    }
+} while ($userMark < 0 || $userMark > 20);
+
+match ($userMark) {
+    10, 11 => $message = "Passable",
+    12, 13 => $message = "Assez Bien",
+    14, 15 => $message = "Bien",
+    16, 17 => $message = "Très bien",
+    18, 19, 20 => $message = "Excellent",
+    default => $message = "Insuffisant"
+};
+
+echo "Appreciation: ".$message;
+
 // Exercice 4 Les structures conditionnelles
 // Niveau 1 :
 echo PHP_EOL;
