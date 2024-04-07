@@ -57,7 +57,8 @@ class Menu
         $nom = readline("Nom du joueur : ");
         $prenom = readline("Prénom du joueur : ");
         $joueur = new Joueur($nom, $prenom);
-        count($tournoi->listerJoueurs()) > 2 ? $this->afficherMenu($tournoi) : $tournoi->ajouterJoueur($joueur);
+        $tournoi->ajouterJoueur($joueur);
+        count($tournoi->listerJoueurs()) > 2 ? $this->afficherMenu($tournoi) : null;
         echo GREEN . "Joueur ajouté avec succès." . RESET . PHP_EOL;
     }
     function menuUtilisateur(MonTournoi $tournoi): void
@@ -97,12 +98,22 @@ class Menu
 
     private function modifierJoueur(MonTournoi $tournoi): void
     {
-        $index = (int)readline(GREEN . "Numéro du joueur à modifier : " . RESET);
+        do {
+            $index = (int)readline(GREEN . "Numéro du joueur à modifier : " . RESET);
+            $joueurs = $tournoi->listerJoueurs();
+            // Vérifications
+            if ($index < 1 || $index > count($joueurs)) {
+                echo RED . "Veuillez entrer un numéro de joueur valide." . RESET . PHP_EOL;
+            }
+        } while ($index < 1 || $index > count($joueurs));
+
         $nom = readline("Nom du joueur : ");
         $prenom = readline("Prénom du joueur : ");
         $joueur = new Joueur($nom, $prenom);
+
         $tournoi->modifierJoueur($index, $joueur);
         echo GREEN ."Joueur modifié avec succès.". RESET . PHP_EOL;
+        $this->afficherMenu( $tournoi);
     }
 
     private function supprimerJoueur(MonTournoi $tournoi): void
