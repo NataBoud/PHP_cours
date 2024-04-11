@@ -3,13 +3,14 @@
 namespace phpTennis\Tournoi;
 
 use phpTennis\Joueur\JoueurInterface;
+use phpTennis\Match\MatchTennis;
 
-require_once 'MatchTennis.php';
+include '..\Match\MatchTennis.php';
 
-abstract class Tournoi
+class Tournoi
 {
-    protected array $joueurs = [];
-    protected array $matchs = [];
+    private array $joueurs = [];
+    private array $matchs = [];
 
     public function ajouterJoueur(JoueurInterface $joueur): void {
         $this->joueurs[] = $joueur;
@@ -41,7 +42,5 @@ abstract class Tournoi
     public function listerMatchs(): array {
         return $this->matchs;
     }
-
-    abstract public function debuterTournoi(): void;
 
 }

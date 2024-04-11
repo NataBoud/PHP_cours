@@ -3,8 +3,9 @@
 namespace phpTennis;
 
 use phpTennis\Joueur\Joueur;
-use phpTennis\Tournoi\MonTournoi;
-include 'Tournoi\MonTournoi.php';
+use phpTennis\Tournoi\Tournoi;
+
+include 'Tournoi\Tournoi.php';
 include 'Joueur\Joueur.php';
 include "tools.php";
 
@@ -38,7 +39,7 @@ class Menu
     }
     function start(): void
     {
-        $tournoi = new MonTournoi(); // Instancier l'objet tournoi1
+        $tournoi = new Tournoi(); // Instancier l'objet tournoi1
         $this->menu();
         do {
             $choix = readline(YELLOW . "Choisissez une option : " . RESET );
@@ -52,7 +53,7 @@ class Menu
         echo YELLOW . "Vous pouvez commencer jouer !". RESET . PHP_EOL;
         $this->menuUtilisateur($tournoi);
     }
-    private function ajouterJoueur(MonTournoi $tournoi): void
+    private function ajouterJoueur(Tournoi $tournoi): void
     {
         $nom = readline("Nom du joueur : ");
         $prenom = readline("Prénom du joueur : ");
@@ -61,7 +62,7 @@ class Menu
         count($tournoi->listerJoueurs()) > 2 ? $this->afficherMenu($tournoi) : null;
         echo GREEN . "Joueur ajouté avec succès." . RESET . PHP_EOL;
     }
-    function menuUtilisateur(MonTournoi $tournoi): void
+    function menuUtilisateur(Tournoi $tournoi): void
     {
         echo GREEN . "Menu :\n" . RESET;
         $mainMenuArray = array(
@@ -86,7 +87,7 @@ class Menu
         };
     }
 
-    public function afficherMenu(MonTournoi $tournoi) : void
+    public function afficherMenu(Tournoi $tournoi) : void
     {
         $choice = readline(GREEN . "Afficher le menu ? (y/n) " . RESET );
         match (strtolower($choice)) {
@@ -96,7 +97,7 @@ class Menu
         };
     }
 
-    private function modifierJoueur(MonTournoi $tournoi): void
+    private function modifierJoueur(Tournoi $tournoi): void
     {
         do {
             $index = (int)readline(GREEN . "Numéro du joueur à modifier : " . RESET);
@@ -116,7 +117,7 @@ class Menu
         $this->afficherMenu( $tournoi);
     }
 
-    private function supprimerJoueur(MonTournoi $tournoi): void
+    private function supprimerJoueur(Tournoi $tournoi): void
     {
         $index = (int)readline(GREEN . "Numéro du joueur à supprimer : ");
         $tournoi->supprimerJoueur($index);
@@ -124,7 +125,7 @@ class Menu
         $this->afficherMenu( $tournoi);
     }
 
-    private function listerJoueurs(MonTournoi $tournoi): void
+    private function listerJoueurs(Tournoi $tournoi): void
     {
         $joueurs = $tournoi->listerJoueurs();
         if (empty($joueurs)) {
@@ -136,17 +137,17 @@ class Menu
         }
         $this->afficherMenu( $tournoi);
     }
-    private function creerMatch(MonTournoi $tournoi): void
+    private function creerMatch(Tournoi $tournoi): void
     {
         $indexJoueur1 = (int)readline(YELLOW . "Numéro du premier joueur : ");
         $indexJoueur2 = (int)readline("Numéro du deuxième joueur : " );
 
         $tournoi->creerMatch($tournoi->listerJoueurs()[$indexJoueur1 - 1], $tournoi->listerJoueurs()[$indexJoueur2 - 1]);
-        $tournoi->debuterTournoi() . PHP_EOL;
+
         $this->afficherMenu( $tournoi). RESET;
     }
 
-    private function listerMatchs(MonTournoi $tournoi): void
+    private function listerMatchs(Tournoi $tournoi): void
     {
         $matchs = $tournoi->listerMatchs();
 
